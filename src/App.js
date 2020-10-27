@@ -5,6 +5,8 @@ class App extends Component {
   constructor() {
     super();
 
+    this.click = []
+
     this.state = {
       data: [
         { id: 0, click: false },
@@ -21,13 +23,26 @@ class App extends Component {
         { id: 11, click: false },
         { id: 12, click: false },
         { id: 13, click: false },
-        { id: 14, click: false },
         { id: 15, click: false },
+        { id: 14, click: false },
       ],
     }
     this.moveTile = this.moveTile.bind(this)
     this.setClickable = this.setClickable.bind(this)
     this.checkWin = this.checkWin.bind(this)
+  }
+
+  scramble() {
+    // console.log(this.state.click)
+    for (let i = 0; i < 20; i++) {
+      let rand = (Math.floor(Math.random() * this.click.length))
+      // console.log(rand)
+
+
+      this.moveTile(this.click[rand].id)
+
+      // console.log(i)
+    }
   }
 
   checkWin() {
@@ -37,26 +52,30 @@ class App extends Component {
         return false;
       }
     }
+    this.setClickable()
+    alert("you win")
     return true;
   }
 
   moveTile(index) {
     let indexOfBlank = this.state.data.findIndex((item) => {
-      console.log(item)
+      // console.log(item)
       return item.id === 15
     })
     let copy = this.state.data;
     let temp = copy[index];
-    console.log({ copy, index, indexOfBlank });
+    // console.log({ copy, index, indexOfBlank });
     copy[index] = copy[indexOfBlank];
     copy[indexOfBlank] = temp;
-    console.log(copy);
+    // console.log(copy);
     this.setState({ data: copy })
     this.checkWin()
   }
 
   setClickable() {
-    console.log("in setClickable, ")
+    // console.log("in setClickable, ")
+    // this.setState({cluck: []})
+    let cluck = []
 
     let indexOfBlank = this.state.data.findIndex((item) => {
       // console.log(item)
@@ -64,28 +83,40 @@ class App extends Component {
     })
 
     let copy = this.state.data.map((item, index) => {
-      console.log(item)
+      // console.log(item)
       if (indexOfBlank === 3 || indexOfBlank === 7 || indexOfBlank === 11) {
         if (index === indexOfBlank - 1 || index === indexOfBlank + 4 || index === indexOfBlank - 4) {
           item.click = true
-          console.log("click: " + item.click)
+          cluck.push(item)
+          // console.log("click: " + item.click)
+        }
+        else {
+          item.click = false
         }
       }
       else if (indexOfBlank === 4 || indexOfBlank === 8 || indexOfBlank === 12) {
         if (index === indexOfBlank + 1 || index === indexOfBlank + 4 || index === indexOfBlank - 4) {
           item.click = true
+          cluck.push(item)
+        }
+        else {
+          item.click = false
         }
       }
       else if (index === indexOfBlank + 1 || index === indexOfBlank - 1 || index === indexOfBlank + 4 || index === indexOfBlank - 4) {
         item.click = true
+        cluck.push(item)
       }
       else {
         item.click = false
       }
+      this.click = cluck
       return item
     })
-    console.log(copy)
+
     this.setState({ data: copy })
+
+    // console.log(this.state.data)
   }
 
   componentDidMount() {
@@ -95,17 +126,17 @@ class App extends Component {
     // let data = window.localStorage.getItem("data")
 
     // if (data) {
-    //   console.log("found data, ")
+      // console.log("found data, ")
     //   this.setState({ data: JSON.parse(data) })
     // }
     // else {
-    //   console.log("did not find currentPage")
+      // console.log("did not find currentPage")
     //   window.localStorage.setItem("data", JSON.stringify(this.state.data))
     // }
   }
 
   // componentDidUpdate() {
-  //   console.log("in componentDidUpdate")
+    // console.log("in componentDidUpdate")
   //   window.localStorage.setItem("data", JSON.stringify(this.state.data))
   // }
 
@@ -124,6 +155,7 @@ class App extends Component {
 
           </div>
         </div>
+        <button class="btn btn-secondary" onClick={() => this.scramble()} >Scramble!</button>
       </div>
     );
   }
