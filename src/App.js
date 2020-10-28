@@ -5,8 +5,6 @@ class App extends Component {
   constructor() {
     super();
 
-    this.cluck = []
-
     this.state = {
       data: [
         { id: 0, click: false },  { id: 1, click: false },  { id: 2, click: false },  { id: 3, click: false },
@@ -16,46 +14,42 @@ class App extends Component {
       ],
     }
     this.moveTile = this.moveTile.bind(this)
-    // this.setClickable = this.setClickable.bind(this)
-    // this.checkWin = this.checkWin.bind(this)
   }
 
   scramble() {
-    // console.log(this.state.click)
-    for (let i = 0; i < 1; i++) {
-      let rand = (Math.floor(Math.random() * this.cluck.length))
-      // console.log(rand)
-      console.log(this.cluck[rand])
-      // console.log(this.click[rand].id)
 
 
-      this.moveTile(this.cluck[rand].id)
+    for (let i = 0; i < 50; i++) {
+      let valid = this.state.data.filter((item, index) => {
+        if (item.click){
+          item["index"] = index
+          return item
+        }
+      })
+      let rand = (Math.floor(Math.random() * valid.length))
 
-      // console.log(i)
+      this.moveTile(valid[rand].index)
     }
   }
 
   checkWin() {
     for (let i = 0; i < this.state.data.length; i++) {
       if (this.state.data[i].id !== i) {
-        // this.setClickable()
         return false;
       }
     }
-    // this.setClickable()
     alert("you win")
     return true;
   }
 
   moveTile(index) {
-    console.log(this.state.data, this.state.data[index].click, index)
+    // console.log(this.state.data, this.state.data[index].click, index)
     if(this.state.data[index].click){
       let indexOfBlank = this.state.data.findIndex((item) => item.id === 15)
       let copy = this.state.data;
       let temp = copy[index];
       copy[index] = copy[indexOfBlank];
       copy[indexOfBlank] = temp;
-      // console.log(copy);
       this.setState({ data: copy })
       this.setClickable()
       this.checkWin()
@@ -63,22 +57,14 @@ class App extends Component {
   }
 
   setClickable() {
-    // console.log("in setClickable, ")
-    // this.setState({cluck: []})
-    this.cluck = []
-
     let indexOfBlank = this.state.data.findIndex((item) => {
-      // console.log(item)
       return item.id === 15
     })
 
     let copy = this.state.data.map((item, index) => {
-      // console.log(item)
       if (indexOfBlank === 3 || indexOfBlank === 7 || indexOfBlank === 11) {
         if (index === indexOfBlank - 1 || index === indexOfBlank + 4 || index === indexOfBlank - 4) {
           item.click = true
-          this.cluck.push(item)
-          // console.log("click: " + item.click)
         }
         else {
           item.click = false
@@ -87,7 +73,6 @@ class App extends Component {
       else if (indexOfBlank === 4 || indexOfBlank === 8 || indexOfBlank === 12) {
         if (index === indexOfBlank + 1 || index === indexOfBlank + 4 || index === indexOfBlank - 4) {
           item.click = true
-          this.cluck.push(item)
         }
         else {
           item.click = false
@@ -95,18 +80,13 @@ class App extends Component {
       }
       else if (index === indexOfBlank + 1 || index === indexOfBlank - 1 || index === indexOfBlank + 4 || index === indexOfBlank - 4) {
         item.click = true
-        this.cluck.push(item)
       }
       else {
         item.click = false
       }
       return item
     })
-  
-    // console.log(this.state.data)
     this.setState({ data: copy })
-
-    // console.log(this.state.data)
   }
 
   componentDidMount() {
@@ -133,18 +113,16 @@ class App extends Component {
   render() {
     return (
       <div class="brand-main">
-        <div class="container">
-          <div class="row">
+        {/* <div class="container">
+          <div class="row"> */}
 
             <Tiles
               data={this.state.data}
               moveTile={this.moveTile}
-              // checkWin={this.checkWin}
-              // setClickable={this.setClickable}
             />
 
-          </div>
-        </div>
+          {/* </div>
+        </div> */}
         <button class="btn btn-secondary" onClick={() => this.scramble()} >Scramble!</button>
       </div>
     );
