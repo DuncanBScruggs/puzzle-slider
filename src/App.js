@@ -7,9 +7,9 @@ class App extends Component {
 
     this.state = {
       data: [
-        { id: 0, click: false },  { id: 1, click: false },  { id: 2, click: false },  { id: 3, click: false },
-        { id: 4, click: false },  { id: 5, click: false },  { id: 6, click: false },  { id: 7, click: false },
-        { id: 8, click: false },  { id: 9, click: false },  { id: 10, click: false }, { id: 11, click: false },
+        { id: 0, click: false }, { id: 1, click: false }, { id: 2, click: false }, { id: 3, click: false },
+        { id: 4, click: false }, { id: 5, click: false }, { id: 6, click: false }, { id: 7, click: false },
+        { id: 8, click: false }, { id: 9, click: false }, { id: 10, click: false }, { id: 11, click: false },
         { id: 12, click: false }, { id: 13, click: false }, { id: 14, click: false }, { id: 15, click: false },
       ],
     }
@@ -18,10 +18,9 @@ class App extends Component {
 
   scramble() {
 
-
     for (let i = 0; i < 50; i++) {
       let valid = this.state.data.filter((item, index) => {
-        if (item.click){
+        if (item.click) {
           item["index"] = index
           return item
         }
@@ -44,7 +43,7 @@ class App extends Component {
 
   moveTile(index) {
     // console.log(this.state.data, this.state.data[index].click, index)
-    if(this.state.data[index].click){
+    if (this.state.data[index].click) {
       let indexOfBlank = this.state.data.findIndex((item) => item.id === 15)
       let copy = this.state.data;
       let temp = copy[index];
@@ -96,34 +95,34 @@ class App extends Component {
     // let data = window.localStorage.getItem("data")
 
     // if (data) {
-      // console.log("found data, ")
+    // console.log("found data, ")
     //   this.setState({ data: JSON.parse(data) })
     // }
     // else {
-      // console.log("did not find currentPage")
+    // console.log("did not find currentPage")
     //   window.localStorage.setItem("data", JSON.stringify(this.state.data))
     // }
   }
 
   // componentDidUpdate() {
-    // console.log("in componentDidUpdate")
+  // console.log("in componentDidUpdate")
   //   window.localStorage.setItem("data", JSON.stringify(this.state.data))
   // }
 
   render() {
     return (
       <div class="brand-main">
-        {/* <div class="container">
-          <div class="row"> */}
 
-            <Tiles
-              data={this.state.data}
-              moveTile={this.moveTile}
-            />
 
-          {/* </div>
-        </div> */}
-        <button class="btn btn-secondary" onClick={() => this.scramble()} >Scramble!</button>
+        <Tiles
+          data={this.state.data}
+          moveTile={this.moveTile}
+        />
+
+
+        <div class="row d-flex justify-content-center mt-5">
+          <button class="btn btn-secondary" onClick={() => this.scramble()} >Scramble!</button>
+        </div>
       </div>
     );
   }
