@@ -7,10 +7,10 @@ class App extends Component {
 
     this.state = {
       data: [
-        { id: 0, click: false }, { id: 1, click: false }, { id: 2, click: false }, { id: 3, click: false },
-        { id: 4, click: false }, { id: 5, click: false }, { id: 6, click: false }, { id: 7, click: false },
-        { id: 8, click: false }, { id: 9, click: false }, { id: 10, click: false }, { id: 11, click: false },
-        { id: 12, click: false }, { id: 13, click: false }, { id: 14, click: false }, { id: 15, click: false },
+        { index: 0, id: 0, click: false }, { index: 1, id: 1, click: false }, { index: 2, id: 2, click: false }, { index: 3, id: 3, click: false },
+        { index: 4, id: 4, click: false }, { index: 5, id: 5, click: false }, { index: 6, id: 6, click: false }, { index: 7, id: 7, click: false },
+        { index: 8, id: 8, click: false }, { index: 9, id: 9, click: false }, { index: 10, id: 10, click: false }, { index: 11, id: 11, click: false },
+        { index: 12, id: 12, click: false }, { index: 13, id: 13, click: false }, { index: 14, id: 14, click: false }, { index: 15, id: 15, click: false },
       ],
     }
     this.moveTile = this.moveTile.bind(this)
@@ -42,7 +42,7 @@ class App extends Component {
   }
 
   moveTile(index) {
-    // console.log(this.state.data, this.state.data[index].click, index)
+    console.log(index)
     if (this.state.data[index].click) {
       let indexOfBlank = this.state.data.findIndex((item) => item.id === 15)
       let copy = this.state.data;
